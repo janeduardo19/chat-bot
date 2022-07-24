@@ -1,9 +1,43 @@
 const express = require("express");
 const app = express();
+const axios = require('axios');
+const { json } = require('express');
 const router = require('./router/router');
+const controller = require('./controller/controller');
+const PORT = process.env.PORT || 8877
 
-app.use(router);
+app.get('/', async(req, res) => {
+	var dados1, dados2, todosDados;
+	var escolhidos, escolhidos2;
+	var page = 1, tamanho;
 
-app.listen(8080, function(req, res){
-	console.log("Servidor rodando na porta 8080");
+	for (; page <= 2; page++) {
+		await axios.get('https://api.github.com/orgs/takenet/repos?direction=asc&per_page=100&page=' + page)
+			.then(function (resposta) {
+
+				if (page == 1) {
+					dados1 = resposta.data;
+				} else {
+					if (page == 2) {
+						dados2 = resposta.data;
+					}
+				}
+
+				todosDados = dados1.concat(dados2);
+
+			}).catch((err) => {
+				res.json({ msg: "Repositório não encontrado" + err })
+			})
+	}
+
+	//console.log(todosDados[106].id);
+
+	escolhidos = todosDados.filter((item) => item.language == 'C#');
+	escolhidos2 = escolhidos.slice(0, 5);
+
+	res.json(escolhidos2);
+});
+
+app.listen(PORT, () => {
+	console.log('Escutando na porta: ' + PORT);
 });
