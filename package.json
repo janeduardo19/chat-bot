@@ -1,0 +1,15 @@
+{
+  "name": "take_api",
+  "version": "1.0.0",
+  "description": "API para consumir uma api do github e disponibilizar informações dos 5 repositórios mais antigos",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "Jan Eduardo",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "express": "^4.18.1"
+  }
+}
