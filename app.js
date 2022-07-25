@@ -2,8 +2,6 @@ const express = require("express");
 const app = express();
 const axios = require('axios');
 const { json } = require('express');
-const router = require('./router/router');
-const controller = require('./controller/controller');
 const PORT = process.env.PORT || 8877
 
 app.get('/', async(req, res) => {
